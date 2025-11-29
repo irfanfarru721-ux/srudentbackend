@@ -8,6 +8,7 @@ import moduleRoutes from "./routes/modules.js";
 import vendorRoutes from "./routes/vendors.js";
 import categoryRoutes from "./routes/categories.js";
 import productRoutes from "./routes/products.js";
+import { authMiddleware, adminOnly } from "./middleware/auth.js";
 
 dotenv.config();
 const app = express();
