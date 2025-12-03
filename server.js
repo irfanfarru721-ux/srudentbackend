@@ -8,7 +8,6 @@ import moduleRoutes from "./routes/modules.js";
 import vendorRoutes from "./routes/vendors.js";
 import categoryRoutes from "./routes/categories.js";
 import productRoutes from "./routes/products.js";
-import orderRoutes from "./routes/orders.js";
 
 dotenv.config();
 const app = express();
@@ -41,7 +40,7 @@ mongoose
     app.use("/api/vendors", vendorRoutes);
     app.use("/api/categories", categoryRoutes);
     app.use("/api/products", productRoutes);
-    app.use("/api/orders", orderRoutes);
+    
     
     // Default route
     app.get("/", (req, res) => {
