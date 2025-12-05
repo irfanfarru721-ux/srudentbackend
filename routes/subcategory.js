@@ -1,21 +1,29 @@
 import express from "express";
-import {
-  createSubcategory,
-  getSubcategories,
-  getSubcategory,
-  updateSubcategory,
-  deleteSubcategory,
-} from "../controllers/subcategoryController.js";
+import Subcategory from "../models/Subcategory.js";
 
 const router = express.Router();
 
-// Public routes
-router.get("/", getSubcategories);           // GET all
-router.get("/:id", getSubcategory);         // GET one
+// List all subcategories
+router.get("/", async (req, res) => {
+  try {
+    const subcategories = await Subcategory.find()
+      .populate("categoryId", "name")
+      .populate("moduleId", "name");
+    res.json(subcategories);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-// Admin routes (protected with middleware if needed)
-router.post("/", createSubcategory);        // CREATE
-router.put("/:id", updateSubcategory);      // UPDATE
-router.delete("/:id", deleteSubcategory);   // DELETE
+// Create a new subcategory
+router.post("/", async (req, res) => {
+  try {
+    const subcategory = new Subcategory(req.body);
+    await subcategory.save();
+    res.json(subcategory);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 export default router;
